@@ -28,6 +28,7 @@
 #include "db/table_properties_collector.h"
 #include "db/version_set.h"
 #include "db/write_controller.h"
+#include "glog/logging.h"
 #include "file/sst_file_manager_impl.h"
 #include "memtable/hash_skiplist_rep.h"
 #include "monitoring/thread_status_util.h"
@@ -1250,10 +1251,12 @@ void ColumnFamilyData::InstallSuperVersion(
 void ColumnFamilyData::InstallSuperVersion(
     SuperVersionContext* sv_context, InstrumentedMutex* db_mutex,
     const MutableCFOptions& mutable_cf_options) {
+  CHECK(this->initialized());
   SuperVersion* new_superversion = sv_context->new_superversion.release();
   new_superversion->db_mutex = db_mutex;
   new_superversion->mutable_cf_options = mutable_cf_options;
   new_superversion->Init(this, mem_, imm_.current(), current_);
+  CHECK_EQ(new_superversion->cf, this);
   SuperVersion* old_superversion = super_version_;
   super_version_ = new_superversion;
   ++super_version_number_;

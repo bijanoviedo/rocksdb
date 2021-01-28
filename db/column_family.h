@@ -199,10 +199,10 @@ class ColumnFamilyHandleInternal : public ColumnFamilyHandleImpl {
 struct SuperVersion {
   // Accessing members of this class is not thread-safe and requires external
   // synchronization (ie db mutex held or on write thread).
-  ColumnFamilyData* cfd;
-  MemTable* mem;
-  MemTableListVersion* imm;
-  Version* current;
+  ColumnFamilyData* cfd = nullptr;
+  MemTable* mem = nullptr;
+  MemTableListVersion* imm = nullptr;
+  Version* current = nullptr;
   MutableCFOptions mutable_cf_options;
   // Version number of the current SuperVersion
   uint64_t version_number;

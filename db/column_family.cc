@@ -1256,7 +1256,7 @@ void ColumnFamilyData::InstallSuperVersion(
   new_superversion->db_mutex = db_mutex;
   new_superversion->mutable_cf_options = mutable_cf_options;
   new_superversion->Init(this, mem_, imm_.current(), current_);
-  CHECK_EQ(new_superversion->cf, this);
+  CHECK_EQ(new_superversion->cfd, this);
   SuperVersion* old_superversion = super_version_;
   super_version_ = new_superversion;
   ++super_version_number_;

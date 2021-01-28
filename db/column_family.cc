@@ -1251,7 +1251,9 @@ void ColumnFamilyData::InstallSuperVersion(
 void ColumnFamilyData::InstallSuperVersion(
     SuperVersionContext* sv_context, InstrumentedMutex* db_mutex,
     const MutableCFOptions& mutable_cf_options) {
-  CHECK(this->initialized());
+  // Do some dummy load from a member variable. If `this` is an invalid pointer,
+  // the following line will crash.
+  CHECK(this->dummy_initialized_.load(std::memory_order_relaxed));
   SuperVersion* new_superversion = sv_context->new_superversion.release();
   new_superversion->db_mutex = db_mutex;
   new_superversion->mutable_cf_options = mutable_cf_options;

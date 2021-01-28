@@ -529,7 +529,7 @@ class ColumnFamilyData {
   uint32_t id_;
   const std::string name_;
   Version* dummy_versions_;  // Head of circular doubly-linked list of versions.
-  Version* current_;         // == dummy_versions->prev_
+  Version* current_ = nullptr;         // == dummy_versions->prev_
 
   std::atomic<int> refs_;      // outstanding references to ColumnFamilyData
   std::atomic<bool> initialized_;
@@ -552,7 +552,7 @@ class ColumnFamilyData {
 
   WriteBufferManager* write_buffer_manager_;
 
-  MemTable* mem_;
+  MemTable* mem_ = nullptr;
   MemTableList imm_;
   SuperVersion* super_version_;
 
@@ -605,6 +605,8 @@ class ColumnFamilyData {
   std::vector<std::shared_ptr<FSDirectory>> data_dirs_;
 
   bool db_paths_registered_;
+
+  const std::atomic<bool> dummy_initialized_{true}; 
 };
 
 // ColumnFamilySet has interesting thread-safety requirements

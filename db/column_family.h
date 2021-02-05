@@ -208,7 +208,7 @@ struct SuperVersion {
   uint64_t version_number;
   WriteStallCondition write_stall_condition;
 
-  InstrumentedMutex* db_mutex;
+  InstrumentedMutex* db_mutex = nullptr;
 
   // should be called outside the mutex
   SuperVersion() = default;

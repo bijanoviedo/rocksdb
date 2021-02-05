@@ -1,4 +1,12 @@
 # Rocksdb Change Log
+## 6.15.4 (01/21/2021)
+### Bug Fixes
+* Fix a race condition between DB startups and shutdowns in managing the periodic background worker threads. One effect of this race condition could be the process being terminated.
+
+## 6.15.3 (01/07/2021)
+### Bug Fixes
+* For Java builds, fix errors due to missing compression library includes.
+
 ## 6.15.2 (12/22/2020)
 ### Bug Fixes
 * Fix failing RocksJava test compilation and add CI jobs
